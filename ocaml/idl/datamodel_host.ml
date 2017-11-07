@@ -1235,6 +1235,17 @@ let host_query_ha = call ~flags:[`Session]
       ~allowed_roles:_R_VM_OP
       ()
 
+  let set_iscsi_iqn = call
+    ~name:"set_iscsi_iqn"
+    ~lifecycle:[Published, rel_jura, ""]
+    ~doc:"Sets the initiator IQN for the host"
+    ~params:[
+      Ref _host, "host", "The host";
+      String, "value", "The value to which the IQN should be set"
+    ]
+    ~allowed_roles:_R_POOL_OP
+    ()
+
   (** Hosts *)
   let t =
     create_obj ~in_db:true ~in_product_since:rel_rio ~in_oss_since:oss_since_303 ~internal_deprecated_since:None ~persist:PersistEverything ~gen_constructor_destructor:false ~name:_host ~descr:"A physical host" ~gen_events:true
@@ -1346,6 +1357,7 @@ let host_query_ha = call ~flags:[`Session]
         apply_guest_agent_config;
         mxgpu_vf_setup;
         allocate_resources_for_vm;
+        set_iscsi_iqn;
       ]
       ~contents:
         ([ uid _host;
