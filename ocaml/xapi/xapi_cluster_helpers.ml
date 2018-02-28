@@ -94,6 +94,6 @@ let with_cluster_operation ~__context ~(self : [`Cluster] API.Ref.t) ~doc ~op ?p
        try
          Db.Cluster.remove_from_current_operations ~__context ~self ~key:task_id;
          update_allowed_operations ~__context ~self;
-         Helpers.Early_wakeup.broadcast (Datamodel._cluster, Ref.string_of self);
+         Helpers.Early_wakeup.broadcast (Datamodel_common._cluster, Ref.string_of self);
        with
          _ -> ())

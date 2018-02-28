@@ -92,6 +92,6 @@ let with_cluster_host_operation ~__context ~(self : [`Cluster_host] API.Ref.t) ~
        try
          Db.Cluster_host.remove_from_current_operations ~__context ~self ~key:task_id;
          update_allowed_operations ~__context ~self;
-         Helpers.Early_wakeup.broadcast (Datamodel._cluster_host, Ref.string_of self);
+         Helpers.Early_wakeup.broadcast (Datamodel_common._cluster_host, Ref.string_of self);
        with
          _ -> ())

@@ -165,10 +165,10 @@ let plug ~__context ~self =
 let unplug ~__context ~self =
   let currently_attached = Db.PBD.get_currently_attached ~__context ~self in
   if currently_attached then
+    let sr = Db.PBD.get_SR ~__context ~self in
     let sr_sm_type = Db.SR.get_type ~__context ~self:sr in
     Xapi_clustering.with_clustering_lock_if_needed ~__context ~sr_sm_type (fun () ->
       let host = Db.PBD.get_host ~__context ~self in
-      let sr = Db.PBD.get_SR ~__context ~self in
       if Db.Host.get_enabled ~__context ~self:host
       then abort_if_storage_attached_to_protected_vms ~__context ~self;
 
